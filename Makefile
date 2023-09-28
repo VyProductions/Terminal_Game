@@ -1,4 +1,6 @@
 OBJECTS=action_impl.o advent.o console.o input_map.o input.o system.o text.o
+CXX=g++
+CXXFLAGS=-std=c++2a -Wall -Wextra -pedantic -Wshadow -Wconversion -Werror=vla -Werror=return-type -Wno-deprecated-copy -g
 
 all: clean advent
 	@rm *.o -f
