@@ -5,6 +5,7 @@ int r, c;                   // Screen coordinate
 int nrows, ncols;           // Dimension of display
 WINDOW* wnd;                // N-curses window struct
 state_t prog_state;         // Current program state (context)
+Console console;
 
 static std::unordered_map<
     state_t,
@@ -32,6 +33,8 @@ void sys_start() {
     log("[Application Start]");
 
     read_inputmap();
+
+    prog_state = DIALOG;
 
     r = c = 0;
 

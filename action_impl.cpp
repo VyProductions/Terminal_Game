@@ -5,7 +5,7 @@ std::unordered_map<
     void (*)(void)
 > func_map = {
     {
-        "UP",
+        "ADVANCE_DIALOG",
         [](void) {
             log("Up invoked.");
         }

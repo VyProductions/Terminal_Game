@@ -22,6 +22,7 @@ void read_inputmap() {
 
     while (input >> name >> ch >> action_name) {
         std::unordered_map<int, void (*)(void)>& state_cat = action_map[name];
+        log(name + std::to_string(action_map[name].size()));
         if (action_map[name].empty()) action_map[name] = {};
         state_cat[(int)ch] = func_map[action_name];
     }
