@@ -27,7 +27,7 @@ void print_msg(const message_t& msg) {
             scrl(1);
         }
 
-        if (c + word.size() >= ncols) {
+        if (c + word.size() >= (size_t)ncols) {
             ++r;
 
             while (r >= nrows) {
@@ -71,7 +71,7 @@ void print_msg(const message_t& msg) {
         c = 4;
 
         for (const std::vector<int>& word : option) {
-            if (c + word.size() >= ncols) {
+            if (c + word.size() >= (size_t)ncols) {
                 ++r;
 
                 while (r >= nrows) {
