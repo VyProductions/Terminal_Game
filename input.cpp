@@ -1,7 +1,7 @@
 #include "proto.h"
 
 extern std::unordered_map<
-    state_t,             // Program contexts / states
+    std::string,         // Program contexts / states
     std::unordered_map<
         int,             // Input keycode value
         void (*)(void)   // Function for that input given the program context
@@ -29,10 +29,13 @@ int get_ch(WINDOW* wnd) {
 void process_input(int keycode) {
     extern state_t prog_state;
 
-    if (
-        action_map[prog_state].size() != 0 &&
-        action_map[prog_state][keycode] != nullptr
-    ) {
-        action_map[prog_state][keycode]();
+    if (action_map[state_name(prog_state)].size() != 0) {
+        if (action_map[state_name(prog_state)][keycode] != nullptr) {
+            action_map[state_name(prog_state)][keycode]();
+        } else {
+            log("  No action exists for keycode " + std::to_string(keycode));
+        }
+    } else {
+        log("  No keybinds exist yet for context '" + state_name(prog_state) + "'");
     }
 }

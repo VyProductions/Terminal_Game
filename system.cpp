@@ -6,8 +6,32 @@ int nrows, ncols;           // Dimension of display
 WINDOW* wnd;                // N-curses window struct
 state_t prog_state;         // Current program state (context)
 
+static std::unordered_map<
+    state_t,
+    std::string
+> state_name_map = {
+    { UNKNOWN, "UNKNOWN" },
+    { DIALOG, "DIALOG" },
+    { TEXT_PROMPT, "TEXT_PROMPT" },
+    { OPTION_PROMPT, "OPTION_PROMPT" },
+    { PLAYER_CONTROL, "PLAYER_CONTROL" }
+};
+
+static std::unordered_map<
+    std::string,
+    state_t
+> name_state_map = {
+    { "UNKNOWN", UNKNOWN },
+    { "DIALOG", DIALOG },
+    { "TEXT_PROMPT", TEXT_PROMPT },
+    { "OPTION_PROMPT", OPTION_PROMPT },
+    { "PLAYER_CONTROL", PLAYER_CONTROL }
+};
+
 void sys_start() {
     log("[Application Start]");
+
+    read_inputmap();
 
     r = c = 0;
 
@@ -51,28 +75,12 @@ void sys_exit() {
     endwin();
 }
 
-std::istream& operator>>(std::istream& in, state_t& s) {
-    std::string name;
+std::string state_name(const state_t& name) {
+    return state_name_map[name];
+}
 
-    if (!(in >> name)) {
-        s = UNKNOWN;
-
-        throw std::runtime_error("state_t::operator>>: Input failed.");
-    } else if (name == "DIALOG") {
-        s = DIALOG;
-    } else if (name == "TEXT_PROMPT") {
-        s = TEXT_PROMPT;
-    } else if (name == "OPTION_PROMPT") {
-        s = OPTION_PROMPT;
-    } else if (name == "PLAYER_CONTROL") {
-        s = PLAYER_CONTROL;
-    } else {
-        s = UNKNOWN;
-
-        throw std::runtime_error(
-            "state_t::operator>>: Unknown state name '" + name + "'"
-        );
-    }
-
-    return in;
+state_t name_state(const std::string& name) {
+    return (state_t)(
+        name_state_map.contains(name) * name_state_map[name]
+    );
 }

@@ -1,7 +1,7 @@
 #include "proto.h"
 
 std::unordered_map<
-    state_t,
+    std::string,
     std::unordered_map<
         int,
         void (*)(void)
@@ -16,14 +16,13 @@ extern std::unordered_map<
 void read_inputmap() {
     std::ifstream input("inputs.txt");
 
-    state_t state;
+    std::string name;
     char ch;
     std::string action_name;
 
-    while (input >> state >> ch) {
-        std::getline(input, action_name, '\n');
-
-        std::unordered_map<int, void (*)(void)>& state_cat = action_map[state];
+    while (input >> name >> ch >> action_name) {
+        std::unordered_map<int, void (*)(void)>& state_cat = action_map[name];
+        if (action_map[name].empty()) action_map[name] = {};
         state_cat[(int)ch] = func_map[action_name];
     }
 

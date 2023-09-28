@@ -14,7 +14,7 @@ extern Console console;
 // System
 void sys_start();
 void sys_exit();
-std::istream& operator>>(std::istream& in, state_t& s);
+std::string state_name(const state_t& name);
 
 // Input
 int get_ch(WINDOW* wnd);

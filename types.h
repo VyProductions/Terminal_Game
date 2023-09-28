@@ -11,7 +11,7 @@
 #include <vector>
 
 enum state_t {
-    UNKNOWN = -1, DIALOG, TEXT_PROMPT, OPTION_PROMPT, PLAYER_CONTROL
+    UNKNOWN, DIALOG, TEXT_PROMPT, OPTION_PROMPT, PLAYER_CONTROL
 };
 
 class Console {
