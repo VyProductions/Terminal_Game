@@ -37,7 +37,8 @@ int main() {
                 break;
             #endif
 
-            default:  // Unrecognized input
+            default:  // Unrecognized input, try to process it
+                process_input(ch);
                 break;
         }
     }
