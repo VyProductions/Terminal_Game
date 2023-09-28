@@ -20,7 +20,6 @@ int main() {
     sys_start();
 
     bool running = true;
-    int beer = 3;
 
     // Game Loop
     while (running) {
