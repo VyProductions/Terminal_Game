@@ -20,7 +20,7 @@ void read_inputmap() {
     while (input >> name >> ch >> action_name) {
         if (name == "ANY") {  // Populate all contexts with keybind
             for (
-                state_t s = UNKNOWN; s < PLAYER_CONTROL; s = (state_t)(s + 1)
+                state_t s = UNKNOWN; s <= PLAYER_CONTROL; s = (state_t)(s + 1)
             ) {
                 keybind_t& state_keys = action_map[state_name(s)];
 

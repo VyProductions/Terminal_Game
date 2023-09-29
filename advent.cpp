@@ -6,6 +6,7 @@
 #define DOWN    279166
 #define RIGHT   279167
 #define LEFT    279168
+#define RESIZE  410
 
 extern bool running;      // Whether application should continue or not
 
@@ -21,6 +22,10 @@ int main() {
         ch = get_ch();
 
         switch (ch) {
+            case RESIZE:
+                resized();
+                break;
+
             #ifdef N_DELAY
             case ERR:  // No input entered
                 break;

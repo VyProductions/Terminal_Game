@@ -34,7 +34,7 @@ void sys_start() {
 
     read_inputmap();
 
-    prog_state = DIALOG;
+    prog_state = PLAYER_CONTROL;
     running = true;
     r = c = 0;
 
@@ -68,4 +68,8 @@ state_t name_state(const std::string& name) {
     return (state_t)(
         name_state_map.contains(name) * name_state_map[name]
     );
+}
+
+void resized() {
+    getmaxyx(wnd, nrows, ncols);
 }

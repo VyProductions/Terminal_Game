@@ -2,6 +2,7 @@
 #define TYPES_H
 
 #include <chrono>
+#include <cstdlib>
 #include <curses.h>
 #include <fstream>
 #include <iostream>
@@ -66,6 +67,19 @@ struct message_t {
     // - each option is separated further into a list of words. Same fmt options
     //   as header
     std::list<std::list<std::vector<int> > > options;
+};
+
+struct vec2_t {
+    int64_t x;  // (-) = left ; (+) = right
+    int64_t y;  // (-) = up   ; (+) = down
+};
+
+struct player_t {
+    std::string player_name;
+    int health;
+    int cash;
+    vec2_t position;
+    vec2_t spawn_point;
 };
 
 typedef std::unordered_map<

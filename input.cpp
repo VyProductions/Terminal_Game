@@ -19,7 +19,9 @@ int get_ch() {
             arr[2] = wgetch(wnd);
             result = 270000 + 100 * arr[1] + arr[2];
             break;
-        default: result = arr[0]; break;
+        default:
+            result = arr[0];
+            break;
     }
 
     return result;

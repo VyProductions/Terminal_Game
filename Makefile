@@ -1,4 +1,4 @@
-OBJECTS=action_impl.o advent.o input_map.o input.o system.o text.o
+OBJECTS=action_impl.o advent.o input_map.o input.o system.o text.o player.o map.o
 CXX=g++
 CXXFLAGS=-std=c++2a -Wall -Wextra -pedantic -Wshadow -Wconversion -Werror=vla -Werror=return-type -Wno-deprecated-copy -g
 
@@ -26,6 +26,12 @@ system.o:
 
 text.o:
 	$(CXX) $(CXXFLAGS) -lcurses text.cpp -c
+
+player.o:
+	$(CXX) $(CXXFLAGS) -lcurses player.cpp -c
+
+map.o:
+	$(CXX) $(CXXFLAGS) -lcurses map.cpp -c
 
 clean:
 	@rm *.o advent -f
