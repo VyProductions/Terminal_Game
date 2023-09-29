@@ -1,11 +1,8 @@
 #include "proto.h"
 
 extern std::unordered_map<
-    std::string,         // Program contexts / states
-    std::unordered_map<
-        int,             // Input keycode value
-        void (*)(void)   // Function for that input given the program context
-    >
+    std::string,  // Program contexts / states
+    keybind_t     // Mapping for state (keycode -> action function)
 > action_map;
 
 extern WINDOW* wnd;

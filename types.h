@@ -68,4 +68,9 @@ struct message_t {
     std::list<std::list<std::vector<int> > > options;
 };
 
+typedef std::unordered_map<
+    int,            // Input keycode value
+    void (*)(void)  // Function for that input given the program context
+> keybind_t;
+
 #endif
