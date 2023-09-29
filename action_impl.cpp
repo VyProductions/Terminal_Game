@@ -5,9 +5,14 @@ std::unordered_map<
     void (*)(void)
 > func_map = {
     {
-        "ADVANCE_DIALOG",
-        [](void) {
-            log("Up invoked.");
+        "ADVANCE_DIALOG", [](void) {
+            log("Advancing dialog...");
+        }
+    },
+    {
+        "EXIT", [](void) {
+            extern bool running;
+            running = false;
         }
     }
 };

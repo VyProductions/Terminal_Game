@@ -1,11 +1,11 @@
 #include "proto.h"
 
-char** display = nullptr;   // Content of display
 int r, c;                   // Screen coordinate
 int nrows, ncols;           // Dimension of display
 WINDOW* wnd;                // N-curses window struct
 state_t prog_state;         // Current program state (context)
-Console console;
+bool running;               // Whether application should continue or not
+Console console;            // Output log file interface
 
 static std::unordered_map<
     state_t,
@@ -35,7 +35,7 @@ void sys_start() {
     read_inputmap();
 
     prog_state = DIALOG;
-
+    running = true;
     r = c = 0;
 
     wnd = initscr();
@@ -55,24 +55,6 @@ void sys_start() {
 }
 
 void sys_exit() {
-    bool exiting = false;
-    c = 2;
-    
-    while (r >= nrows) {
-        --r;
-        scrl(1);
-    }
-
-    for (const char ch : std::string("Press any key to exit...")) {
-        mvaddch(r, c++, (int)ch | A_BOLD);
-    }
-
-    while (!exiting) {
-        int ch = get_ch(wnd);
-
-        exiting = ch != ERR;
-    }
-
     log("[Application End]");
 
     endwin();

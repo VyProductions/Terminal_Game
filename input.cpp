@@ -8,7 +8,9 @@ extern std::unordered_map<
     >
 > action_map;
 
-int get_ch(WINDOW* wnd) {
+extern WINDOW* wnd;
+
+int get_ch() {
     static int arr[3] {};
 
     int result = 0;

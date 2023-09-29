@@ -7,10 +7,7 @@
 #define RIGHT   279167
 #define LEFT    279168
 
-extern char** display;             // Content of display
-extern int r, c;                   // Screen coordinate
-extern int nrows, ncols;           // Dimension of display
-extern WINDOW* wnd;                // N-curses window struct
+extern bool running;      // Whether application should continue or not
 
 using namespace std::chrono_literals;
 
@@ -19,19 +16,11 @@ int main() {
 
     sys_start();
 
-    bool running = true;
-
     // Game Loop
     while (running) {
-        ch = get_ch(wnd);
+        ch = get_ch();
 
         switch (ch) {
-            case (int)'q':  // Exit keybind
-                log(std::string("Key pressed: ") + (char)ch);
-                log("  Exiting...");
-                running = false;
-                break;
-
             #ifdef N_DELAY
             case ERR:  // No input entered
                 break;

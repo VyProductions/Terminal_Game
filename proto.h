@@ -17,7 +17,7 @@ void sys_exit();
 std::string state_name(const state_t& name);
 
 // Input
-int get_ch(WINDOW* wnd);
+int get_ch();
 void process_input(int keycode);
 
 // Input Map

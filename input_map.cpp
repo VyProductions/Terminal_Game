@@ -21,10 +21,19 @@ void read_inputmap() {
     std::string action_name;
 
     while (input >> name >> ch >> action_name) {
-        std::unordered_map<int, void (*)(void)>& state_cat = action_map[name];
-        log(name + std::to_string(action_map[name].size()));
-        if (action_map[name].empty()) action_map[name] = {};
-        state_cat[(int)ch] = func_map[action_name];
+        if (name == "ANY") {  // Populate all contexts with keybind
+            for (
+                state_t s = UNKNOWN; s < PLAYER_CONTROL; s = (state_t)(s + 1)
+            ) {
+                std::unordered_map<int, void (*)(void)>& state_cat = action_map[state_name(s)];
+                if (state_cat.empty()) state_cat = {};
+                state_cat[(int)ch] = func_map[action_name];
+            }
+        } else {  // Add keybind to specific context
+            std::unordered_map<int, void (*)(void)>& state_cat = action_map[name];
+            if (state_cat.empty()) state_cat = {};
+            state_cat[(int)ch] = func_map[action_name];
+        }
     }
 
     input.close();
