@@ -95,22 +95,22 @@ void print_msg(const message_t& msg) {
     ++r;  // add blank line between messages
 }
 
-std::vector<int> vec_fmt(const std::string& str, int fmt_flags) {
+std::vector<int> vec_fmt(const std::wstring& str, int fmt_flags) {
     std::vector<int> vec;
 
-    for (const char& ch : str) {
+    for (const wchar_t& ch : str) {
         vec.push_back((int)(ch) | fmt_flags);
     }
 
     return vec;
 }
 
-std::list<std::vector<int> > word_fmt(const std::string& str, int fmt_flags) {
+std::list<std::vector<int> > word_fmt(const std::wstring& str, int fmt_flags) {
     if(str.empty() || str.front() == ' ' || str.back() == ' ') {
         throw std::logic_error("text::word_fmt(): whitespace on string edge(s).");
     }
     
-    std::list<std::string> _words;         // List of words from input string
+    std::list<std::wstring> _words;         // List of words from input string
     std::list<std::vector<int> > words;  // Converted strings for printing
 
     size_t p = 0;
@@ -128,10 +128,10 @@ std::list<std::vector<int> > word_fmt(const std::string& str, int fmt_flags) {
         p = ++q;
     }
 
-    for (const std::string& w : _words) {
+    for (const std::wstring& w : _words) {
         std::vector<int> tmp;
 
-        for (const char& ch : w) {
+        for (const wchar_t& ch : w) {
             tmp.push_back((int)(ch) | fmt_flags);
         }
 
@@ -141,8 +141,8 @@ std::list<std::vector<int> > word_fmt(const std::string& str, int fmt_flags) {
     return words;
 }
 
-std::string vec_str(std::vector<int> word) {
-    std::string str = "";
+std::wstring vec_str(std::vector<int> word) {
+    std::wstring str = L"";
 
     for (const int& ch : word) {
         str += (char)ch;

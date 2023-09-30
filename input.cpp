@@ -34,9 +34,9 @@ void process_input(int keycode) {
         if (action_map[state_name(prog_state)][keycode] != nullptr) {
             action_map[state_name(prog_state)][keycode]();
         } else {
-            log("  No action exists for keycode " + std::to_string(keycode));
+            log(L"  No action exists for keycode " + std::to_wstring(keycode));
         }
     } else {
-        log("  No keybinds exist yet for context '" + state_name(prog_state) + "'");
+        log(L"  No keybinds exist yet for context '" + state_wname(prog_state) + L'\'');
     }
 }

@@ -1,12 +1,15 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <algorithm>
 #include <chrono>
+#include <codecvt>
 #include <cstdlib>
 #include <curses.h>
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <locale.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -25,35 +28,39 @@ public:
 
     void open() {
         logfile.open("log.txt", std::ios::out | std::ios::trunc);
+        std::locale mylocale("");   // get global locale
+        logfile.imbue(mylocale);    // Resolve weird issue with wofstream
         origin = std::chrono::high_resolution_clock::now();
     }
 
-    void close() { logfile.close(); }
+    void close() {
+        logfile.close();
+    }
 
     template <class T>
     void _log(const T& msg) {
         now = std::chrono::high_resolution_clock::now();
         auto diff = std::chrono::duration_cast<std::chrono::microseconds>(now - origin);
-        logfile << "[" << ftick(diff.count()) << "] " << msg << std::endl;
+        logfile << L"[" << ftick(diff.count()) << L"] " << msg << std::endl;
     }
 private:
-    std::string ftick(int64_t ticks) {
-        std::string h  = std::to_string(ticks / (3'600'000'000));
-        std::string m  = std::to_string((ticks % 3'600'000'000) / 60'000'000);
-        std::string s  = std::to_string((ticks % 60'000'000) / 1'000'000);
-        std::string us = std::to_string((ticks % 1'000'000));
-        h = std::string(9 - h.length(), '0') + h;
-        m = std::string(2 - m.length(), '0') + m;
-        s = std::string(2 - s.length(), '0') + s;
-        us = std::string(6 - us.length(), '0') + us;
+    std::wstring ftick(int64_t ticks) {
+        std::wstring h  = std::to_wstring(ticks / (3'600'000'000));
+        std::wstring m  = std::to_wstring((ticks % 3'600'000'000) / 60'000'000);
+        std::wstring s  = std::to_wstring((ticks % 60'000'000) / 1'000'000);
+        std::wstring us = std::to_wstring((ticks % 1'000'000));
+        h = std::wstring(9 - h.length(), '0') + h;
+        m = std::wstring(2 - m.length(), '0') + m;
+        s = std::wstring(2 - s.length(), '0') + s;
+        us = std::wstring(6 - us.length(), '0') + us;
 
-        return h + ':' + m + ':' + s + '.' + us;
+        return h + L':' + m + L':' + s + L'.' + us;
     }
 
     tick_t origin;
     tick_t now;
 
-    std::ofstream logfile;
+    std::wofstream logfile;
 };
 
 struct message_t {
@@ -72,14 +79,53 @@ struct message_t {
 struct vec2_t {
     int64_t x;  // (-) = left ; (+) = right
     int64_t y;  // (-) = up   ; (+) = down
+
+    bool operator==(const vec2_t rhs) const {
+        return x == rhs.x && y == rhs.y;
+    }
+};
+
+template <>
+struct std::hash<vec2_t>
+{
+  std::size_t operator()(const vec2_t& v) const
+  {
+    return std::hash<std::string>()(std::to_string(v.x) + ',' + std::to_string(v.y));
+  }
+};
+
+enum dir_t {
+    NIL, UP, LEFT, DOWN, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT
 };
 
 struct player_t {
-    std::string player_name;
+    std::wstring player_name;
     int health;
     int cash;
     vec2_t position;
     vec2_t spawn_point;
+    dir_t look_direction;
+    std::wstring icon() {
+        std::wstring ic;
+        switch (look_direction) {
+            case UP:         ic = L"\u2191"; break;
+            case LEFT:       ic = L"\u2190"; break;
+            case DOWN:       ic = L"\u2193"; break;
+            case RIGHT:      ic = L"\u2192"; break;
+            case UP_LEFT:    ic = L"\u2196"; break;
+            case UP_RIGHT:   ic = L"\u2197"; break;
+            case DOWN_LEFT:  ic = L"\u2199"; break;
+            case DOWN_RIGHT: ic = L"\u2198"; break;
+            default:         ic = L"?";      break;
+        }
+
+        return ic;
+    }
+};
+
+struct object_t {
+    std::string name;
+    std::wstring icon;
 };
 
 typedef std::unordered_map<

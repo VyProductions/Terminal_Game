@@ -19,6 +19,7 @@ int main() {
 
     // Game Loop
     while (running) {
+        draw_display();
         ch = get_ch();
 
         switch (ch) {

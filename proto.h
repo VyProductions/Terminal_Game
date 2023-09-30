@@ -15,6 +15,7 @@ extern Console console;
 void sys_start();
 void sys_exit();
 std::string state_name(const state_t& name);
+std::wstring state_wname(const state_t& name);
 void resized();
 
 // Input
@@ -26,14 +27,14 @@ void read_inputmap();
 
 // Text
 void print_msg(const message_t& msg);
-std::vector<int> vec_fmt(const std::string& str, int fmt_flags = 0);
-std::list<std::vector<int> > word_fmt(const std::string& str, int fmt_flags = 0);
-std::string vec_str(std::vector<int> word);
+std::vector<int> vec_fmt(const std::wstring& str, int fmt_flags = 0);
+std::list<std::vector<int> > word_fmt(const std::wstring& str, int fmt_flags = 0);
+std::wstring vec_str(std::vector<int> word);
 
 // Player
 void respawn();
 
 // Map
-void draw_map(vec2_t top_left, vec2_t bottom_right);
+void draw_display();
 
 #endif

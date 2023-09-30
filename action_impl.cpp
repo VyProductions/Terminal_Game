@@ -6,7 +6,7 @@ std::unordered_map<
 > func_map = {
     {
         "ADVANCE_DIALOG", [](void) {
-            log("Advancing dialog...");
+            log(L"Advancing dialog...");
         }
     }, {
         "EXIT", [](void) {
@@ -15,47 +15,43 @@ std::unordered_map<
         }
     }, {
         "MOVE_UP", [](void) {
-            log("Move up...");
+            log(L"Move up...");
         }
     }, {
         "TURN_UP", [](void) {
-            log("Turn up...");
+            log(L"Turn up...");
         }
     }, {
         "MOVE_LEFT", [](void) {
-            log("Move left...");
+            log(L"Move left...");
         }
     }, {
         "TURN_LEFT", [](void) {
-            log("Turn left...");
+            log(L"Turn left...");
         }
     }, {
         "MOVE_DOWN", [](void) {
-            log("Move down...");
+            log(L"Move down...");
         }
     }, {
         "TURN_DOWN", [](void) {
-            log("Turn down...");
+            log(L"Turn down...");
         }
     }, {
         "MOVE_RIGHT", [](void) {
-            log("Move right...");
+            log(L"Move right...");
         }
     }, {
         "TURN_RIGHT", [](void) {
-            log("Turn right...");
+            log(L"Turn right...");
         }
     }, {
         "INTERACT", [](void) {
-            log("Interacting...");
+            log(L"Interacting...");
         }
     }, {
         "RESPAWN", [](void) {
             respawn();
-        }
-    }, {
-        "DRAW_MAP", [](void) {
-            draw_map({}, {});
         }
     }
 };
